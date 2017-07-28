@@ -2,7 +2,11 @@
 
 The Genome U-Plot is a JavaScript tool to visualize Chromosomal abnormalities in the Human Genome using a U-shape layout. 
 
-![](https://github.com/gaitat/GenomeUPlot/data/sampleIdLNCAP.png)
+<p align="center">
+  <img src="data/sampleIdLNCAP.png" alt="GenomeUPlot">
+  <br/>
+  Whole Genome U-Plot. Visible are the 24 human chromosomes arranged in a U-shape, the cytobands, the chromosome junctions and the copy number variations (CNVs). The axes at the bottom right of the graph are respectively for the chromosomes on the right side of the plot.
+</p>
 
 **Note:** This is an example prototype visualization technique. 
 
