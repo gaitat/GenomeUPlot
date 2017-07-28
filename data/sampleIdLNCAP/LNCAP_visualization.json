@@ -1,0 +1,6 @@
+{
+	"fileFormatVersion": 1,
+	"altsComprehensive": "LNCAP_alts_comprehensive.csv",
+	"cnvBinned30KJson": "LNCAP_genomePlot_cnv30.json",
+	"cnvIntervals": "LNCAP_cnvIntervals.csv"
+}
