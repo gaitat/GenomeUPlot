@@ -221,7 +221,7 @@ GenomePlot.parseQueryString = function ()
 
 GenomePlot.initData = function ()
 {
-	GenomePlot.prefixFile = "./data/" + "sampleId" + GenomePlot.sampleId;
+	GenomePlot.prefixFile = "./data/" + GenomePlot.sampleId;
 	GenomePlot.matepairDataFile = GenomePlot.prefixFile + "/" + GenomePlot.sampleId + "_visualization.json";
 
 	GenomePlot.matepairData = undefined;

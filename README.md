@@ -3,7 +3,7 @@
 The Genome U-Plot is a JavaScript tool to visualize Chromosomal abnormalities in the Human Genome using a U-shape layout. 
 
 <p align="center">
-  <img src="data/sampleIdLNCAP.png" alt="GenomeUPlot">
+  <img src="data/LNCAP.png" alt="GenomeUPlot">
   <br/>
   Whole Genome U-Plot. Visible are the 24 human chromosomes arranged in a U-shape, the cytobands, the chromosome junctions and the copy number variations (CNVs). The axes at the bottom right of the graph are respectively for the chromosomes on the right side of the plot.
 </p>
@@ -39,10 +39,10 @@ http://localhost:8000/GenomePlot.html?sampleId=LNCAP
 A sample (LNCAP) with all required files is provided in the `data` folder
 
 ```
-sampleIdLNCAP/LNCAP_alts_comprehensive.csv  (Sample Rearrangements)
-sampleIdLNCAP/LNCAP_cnvIntervals.csv        (Sample Copy Number Variation - Intervals)
-sampleIdLNCAP/LNCAP_genomePlot_cnv30.json   (Sample Copy Number Variation - Raw Frequency)
-sampleIdLNCAP/LNCAP_visualization.json      (Sample Definition)
+LNCAP/LNCAP_alts_comprehensive.csv  (Sample Rearrangements)
+LNCAP/LNCAP_cnvIntervals.csv        (Sample Copy Number Variation - Intervals)
+LNCAP/LNCAP_genomePlot_cnv30.json   (Sample Copy Number Variation - Raw Frequency)
+LNCAP/LNCAP_visualization.json      (Sample Definition)
 ```
 
 In order to run the application against a different sample (eg. MY_SAMPLE) you need to create 
@@ -76,7 +76,7 @@ Then you must convert the file to a json format of the following form:
 
 ### Sample Definition
 
-A sample specific json file must be provided (as in `sampleIdLNCAP\LNCAP_genomePlot_cnv30.json`):
+A sample specific json file must be provided (as in `LNCAP\LNCAP_genomePlot_cnv30.json`):
 ```javascript
 {
     fileFormatVersion: 1,
@@ -89,7 +89,7 @@ A sample specific json file must be provided (as in `sampleIdLNCAP\LNCAP_genomeP
 ### Sample Rearrangements
 
 In order to visualize chromosomal rearrangements, a csv file is required 
-(as in `sampleIdLNCAP/LNCAP_alts_comprehensive.csv`) and the following columns of integers 
+(as in `LNCAP/LNCAP_alts_comprehensive.csv`) and the following columns of integers 
 must be supplied:
 ```
     Nassoc,chrA,chrB,posA,posB
@@ -99,11 +99,11 @@ where *Nassoc* is the number (integer) of supporting fragments of the events.
 ### Sample Copy Number Variation
 
 In order to visualize copy number, two files of a specific format must be supplied. First, a file 
-(as in `sampleIdLNCAP/LNCAP_genomePlot_cnv30.json`) with the raw frequency data from a 30000 bin 
+(as in `LNCAP/LNCAP_genomePlot_cnv30.json`) with the raw frequency data from a 30000 bin 
 moving window.
 
 The second file contains the copy number state information; a csv 
-file (as in `sampleIdLNCAP/LNCAP_cnvIntervals.csv`) with the following columns must be supplied:
+file (as in `LNCAP/LNCAP_cnvIntervals.csv`) with the following columns must be supplied:
 ```
     chr,start,end,cnvState,nrd
 ```
