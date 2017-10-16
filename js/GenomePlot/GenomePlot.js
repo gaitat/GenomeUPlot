@@ -478,6 +478,31 @@ GenomePlot.initTransforms = function ()
 				])
 				.clamp(true);	// dont want values above 12
 	}
+
+	GenomePlot.scaleMin = 1;		// limits the zoom, 1 means do not allow zoom-out
+	GenomePlot.scaleMax = 200000;	// go up to one base per pixel
+
+	GenomePlot.zoom = d3.behavior.zoom()
+		.scaleExtent( [ GenomePlot.scaleMin, GenomePlot.scaleMax ] )
+		.x( GenomePlot.linearGenomicToPaddedPixelScaleX )
+		.y( GenomePlot.linearWindowPixelToPaddedPixelScaleY )
+		.on( "zoom", GenomePlot.onZoom )
+	;
+
+	if( GenomePlot.graphTypeParams.graphType === "U-Shape" )
+	{
+		GenomePlot.zoomY_L = d3.behavior.zoom()
+			.scaleExtent( [ GenomePlot.scaleMin, GenomePlot.scaleMax ] )
+			.y( GenomePlot.linearChromosomeToPaddedPixelScaleY_L );
+
+		if( GenomePlot.graphTypeParams.graphType === "U-Shape" )
+		{
+			GenomePlot.zoomY_R = d3.behavior.zoom()
+				.scaleExtent( [ GenomePlot.scaleMin, GenomePlot.scaleMax ] )
+				.y( GenomePlot.linearChromosomeToPaddedPixelScaleY_R );
+		}
+	}
+
 }	// initTransforms
 
 GenomePlot.setupContainer = function ()
@@ -576,6 +601,10 @@ GenomePlot.setupContainer = function ()
 			}
 		} )
 	;
+
+	groupMainContainer
+		.call( GenomePlot.zoom )
+		.on( "dblclick.zoom", null );	// disable double click zoom for d3.behavior.zoom
 }	// setupContainer
 
 GenomePlot.drawBackground = function ()
@@ -1401,7 +1430,7 @@ GenomePlot.drawSVGCopyNumber = function()
 
 				var line = d3.svg.line()
 					.x( function( d, i ) { return GenomePlot.linearGenomicToPaddedPixelScaleX( d.x + GenomePlot.chromPixelStarts[ chrom_id ].x ); } )
-					.y( function( d, i ) { return ( 1 - d.y ) * 0.5 * GenomePlot.pixelsPerLine + GenomePlot.linearWindowPixelToPaddedPixelScaleY( GenomePlot.chromPixelStarts[ chrom_id ].y ); } )											// translate y value to a pixel
+					.y( function( d, i ) { return ( 1 - d.y ) * 0.5 * GenomePlot.scale * GenomePlot.pixelsPerLine + GenomePlot.linearWindowPixelToPaddedPixelScaleY( GenomePlot.chromPixelStarts[ chrom_id ].y ); } )											// translate y value to a pixel
 				;
 
 				if( GenomePlot.copyNumberStateData !== undefined )
@@ -1447,6 +1476,7 @@ GenomePlot.drawSVGCopyNumber = function()
 									} )
 									.selectAll("path")
 										.data( data[sc] )
+						;
 
 						lines
 							.enter().append( "svg:path" )
@@ -1783,7 +1813,7 @@ GenomePlot.drawAxis = function ()
 				"fill": "black",
 				"cursor": "pointer",
 			} )
-			.each( vCenter( GenomePlot.pixelsPerLine ) )
+			.each( vCenter( GenomePlot.scale * GenomePlot.pixelsPerLine ) )
 			.each( hCenter( GenomePlot.margin.left - 5, -1 ) )
 		;
 
@@ -1836,14 +1866,94 @@ GenomePlot.drawAxis = function ()
 				"fill": "black",
 				"cursor": "pointer",
 			} )
-			.each( vCenter( GenomePlot.pixelsPerLine ) )
+			.each( vCenter( GenomePlot.scale * GenomePlot.pixelsPerLine ) )
 			.each( hCenter( GenomePlot.margin.right - 5, 1 ) )
 		;
 	}
 
 	var endTime = performance.now();
 	if( GenomePlot.debug ) console.info( sprintf( "%-20s duration: %.4f seconds", "drawAxis():", ((endTime-startTime)/1000) ) );
-}	// drawAxis
+};	// drawAxis
+
+GenomePlot.onZoom = function () {
+
+	var t = d3.event.translate,
+		s = d3.event.scale;
+
+	// constrain the x and y components of the translation by the dimensions of the viewport
+	// from: https://gist.github.com/shawnbot/6518285
+	t[0] = Math.min(0, Math.max(t[0], GenomePlot.innerWidth - GenomePlot.innerWidth * s));
+	t[1] = Math.min(0, Math.max(t[1], GenomePlot.innerHeight - GenomePlot.innerHeight * s));
+
+	GenomePlot.scale = s;
+	GenomePlot.translate = t;
+
+	// update the behavior translate values with the constrained values
+	d3.event.target.translate(t);
+
+	// for geometric zooming
+//	d3.select('#groupMainContainerContents').attr("transform", "translate(" + t + ")" + " scale(" + s + ")");
+
+	// or, for semantic zooming
+	GenomePlot.updateZoom(t, s);
+};	// onZoom
+
+GenomePlot.updateZoom = function ( t, s )
+{
+	// from: http://stackoverflow.com/questions/23212277/adding-several-y-axes-with-zoom-pan-in-d3js
+	if( GenomePlot.graphTypeParams.graphType === "U-Shape")
+	{
+		GenomePlot.zoomY_L.scale( s ).translate( t );
+
+		if (GenomePlot.graphTypeParams.graphType === "U-Shape") {
+			GenomePlot.zoomY_R.scale( s ).translate( t );
+		}
+
+		GenomePlot.basesPerPixel = Math.ceil( GenomePlot.MAX_CHROMOSOME_BASE / (
+			GenomePlot.linearGenomicToPaddedPixelScaleX( GenomePlot.MAX_CHROMOSOME_BASE ) -
+			GenomePlot.linearGenomicToPaddedPixelScaleX( 0 ) ) );
+		GenomePlot.scaledPixelsPerLine =
+			GenomePlot.linearWindowPixelToPaddedPixelScaleY( GenomePlot.chromPixelStarts[1].y ) -
+			GenomePlot.linearWindowPixelToPaddedPixelScaleY( GenomePlot.chromPixelStarts[0].y );
+
+		// update scale as it depends on scaledPixelsPerLine
+		// by zoom factor 12 bring the elements' y-position to the middle of the chromosome height
+		for (var chrom_id = 0; chrom_id < GenomePlot.NUM_CHROMS; chrom_id++)
+		{
+			GenomePlot.exponentMoveToMiddleOfChromScaleY[ chrom_id ] =
+				d3.scale.pow().exponent(0.05)
+					.domain([ 1, 12 ])	// 12: arbitrary scale value by which we want the overlap of data to take effect
+					.range([
+						// GenomePlot.chromPixelStarts is 0 based
+						GenomePlot.linearWindowPixelToPaddedPixelScaleY(GenomePlot.chromPixelStarts[ chrom_id ].y + GenomePlot.pixelsPerLine / 3.5),
+						GenomePlot.linearWindowPixelToPaddedPixelScaleY(GenomePlot.chromPixelStarts[ chrom_id ].y) - 0.05 * GenomePlot.scaledPixelsPerLine
+					])
+					.clamp(true);	// dont want values above 12
+		}
+	}
+
+	GenomePlot.drawBackground();
+
+	GenomePlot.drawHorizontalDividers();
+	GenomePlot.drawVerticalDividers();
+
+	GenomePlot.drawCytobands();
+	GenomePlot.drawSVGCopyNumber();
+	GenomePlot.drawAlterations();
+
+	// set the opacity of the vertical labels depending on how much of the chromosome we see in out viewport
+	if( GenomePlot.graphTypeParams.graphType === "U-Shape" )
+	{
+		var virtualWidth = GenomePlot.innerWidth - GenomePlot.innerWidth * s;
+
+			d3.selectAll(".y.axis_L text")
+			.style( "opacity", function( d ) { return 1 - t[0] / virtualWidth; } );
+
+		d3.selectAll( ".y.axis_R text" )
+			.style( "opacity", function( d ) { return t[0] / virtualWidth; } );
+	}
+}	// updateZoom
+
 
 GenomePlot.drawCircos = function ()
 {
@@ -2359,6 +2469,9 @@ $(document).ready( function()
 
 	document.title = GenomePlot.sampleId + " Whole Genome Analysis";	// initData() must have been called already
 	$("#pageTitle").html( "Integrated Whole Genome Analysis, " + GenomePlot.sampleGenome );
+
+	GenomePlot.translate = [0,0];
+	GenomePlot.scale = 1;
 
 	// also computes linesPerGraph and pixelsPerLine
 	GenomePlot.computeChromosomeStartPositions();
