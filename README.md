@@ -76,7 +76,7 @@ Then you must convert the file to a json format of the following form:
 
 ### Sample Definition
 
-A sample specific json file must be provided (as in `LNCAP\LNCAP_genomePlot_cnv30.json`):
+A sample specific json file must be provided (as in `LNCAP\LNCAP_visualization.json`):
 ```javascript
 {
     fileFormatVersion: 1,
