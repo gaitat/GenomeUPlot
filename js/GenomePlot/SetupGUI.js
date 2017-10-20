@@ -60,7 +60,7 @@ GenomePlot.initGUI = function()
 	};
 
 	GenomePlot.gui.jc.add (GenomePlot.gui.junctionsParams, "drawTypes", GenomePlot.junctionsParams.drawTypes)
-		.name("Draw as")
+		.name("Draw as").title("Enable or disable drawing of the Junctions")
 		.onChange (function (value)
 		{
 			if( GenomePlot.junctionsParams.drawType === value ) return;
@@ -133,7 +133,8 @@ GenomePlot.initGUI = function()
 
 	var ci = { calculateIntersections: GenomePlot.criteriaArcFactor };
 
-	GenomePlot.gui.jc.criteria = GenomePlot.gui.jc.add (ci, "calculateIntersections").name("Arc factor - Use best (through simulation)");
+	GenomePlot.gui.jc.criteria = GenomePlot.gui.jc.add (ci, "calculateIntersections").name("Arc factor - Use best (through simulation)")
+		.title("Find the best Arc Curvature factor to use");
 	$(GenomePlot.gui.jc.criteria.domElement).siblings("span.property-name").css("width", "95%");
 
 	///////////////////////////////////////////////////////////////////////////
@@ -172,7 +173,7 @@ GenomePlot.initGUI = function()
 	};
 
 	GenomePlot.gui.cn.add (GenomePlot.gui.copyNumberParams, "drawType", GenomePlot.copyNumberParams.drawTypes)
-		.name("Draw as")
+		.name("Draw as").title("Enable or disable drawing of the Copy Number")
 		.onChange (function (value)
 		{
 			if( GenomePlot.copyNumberParams.drawType === value ) return;
@@ -194,7 +195,7 @@ GenomePlot.initGUI = function()
 	};
 
 	GenomePlot.gui.cb.add (GenomePlot.gui.cytoBandsParams, "visible", 0, 100).step(5)		// shorthand for min/max/step
-		.name("Visibility")
+		.name("Visibility").title("Change the Visibility")
 		.onChange (function (value)
 		{
 			if( GenomePlot.cytoBandsParams.visibility === value ) return;
@@ -270,7 +271,7 @@ GenomePlot.initGUI = function()
 		});
 
 	GenomePlot.gui.utilities.additionalXAxis = GenomePlot.gui.ut.add (GenomePlot.gui.utilities, "additionalAxis")
-		.name("Additional X-Axes")
+		.name("Additional X-Axes").title("Enable or disable x-axis for the right side of the chromosomes")
 		.onChange (function (value)
 		{
 			if( GenomePlot.miscParams.showAdditionalAxis === value ) return;
@@ -287,7 +288,7 @@ GenomePlot.initGUI = function()
 	}
 
 	GenomePlot.gui.ut.add (GenomePlot.gui.utilities, "tooltips")
-		.name("Tooltips")
+		.name("Tooltips").title("Enable or disable tooltips")
 		.onChange (function (value)
 		{
 			GenomePlot.miscParams.showTooltips = ! GenomePlot.miscParams.showTooltips;
@@ -299,7 +300,7 @@ GenomePlot.initGUI = function()
 		} );
 
 	GenomePlot.gui.ut.add (GenomePlot.gui.utilities, "hoverline")
-		.name("Hoverline")
+		.name("Hoverline").title("Enable or disable a hoverline")
 		.onChange (function (value)
 		{
 			GenomePlot.miscParams.showHoverline = ! GenomePlot.miscParams.showHoverline;
