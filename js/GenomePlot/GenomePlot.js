@@ -265,6 +265,7 @@ GenomePlot.initData = function ()
 	}
 
 	// load new copy number data
+	GenomePlot.copyNumberData = GenomePlot.copyNumber30000Data = undefined;
 	if( GenomePlot.copyNumber30000DataFile === undefined ) {
 		console.error( sprintf( "%-18s Undefined CNV file of window size 30000", "initData():" ) );
 	}
@@ -273,6 +274,7 @@ GenomePlot.initData = function ()
 			.done (function () {
 				GenomePlot.copyNumber30000DataStartTime = performance.now();
 				console.info( sprintf( "%-20s Started loading CNV file of window size 30000: %s at %.4fms", "initData():", GenomePlot.copyNumber30000DataFile, GenomePlot.copyNumber30000DataStartTime ) );
+				GenomePlot.loadedResources++;
 
 				$.getJSON (GenomePlot.copyNumber30000DataFile)
 					.fail (function() {
@@ -281,12 +283,13 @@ GenomePlot.initData = function ()
 					.done (function (data) {
 						var endTime = performance.now();
 						console.info( sprintf( "%-20s Finished loading CNV file of window size 30000: %s at %.4fms (duration: %.4f seconds)", "initData():", GenomePlot.copyNumber30000DataFile, endTime, ( ( endTime - GenomePlot.copyNumber30000DataStartTime ) / 1000 ) ) );
+						GenomePlot.loadedResources--;
 
 						GenomePlot.processCopyNumber30000Data(data);
 					} );
 			} )
 			.fail (function () {
-				GenomePlot.GenomePlot.copyNumberData = GenomePlot.copyNumber30000Data = null;
+				GenomePlot.copyNumberData = GenomePlot.copyNumber30000Data = undefined;
 
 				console.error( sprintf( "%-18s Failed to find CNV file of window size 30000: %s", "initData():", GenomePlot.copyNumber30000DataFile ) );
 			} );
@@ -302,12 +305,15 @@ GenomePlot.initData = function ()
 			.done (function () {
 				GenomePlot.copyNumberStateDataStartTime = performance.now();
 				console.info( sprintf( "%-20s Started loading CNV Intervals file: %s at %.4fms", "initData():", GenomePlot.copyNumberStateDataFile, GenomePlot.copyNumberStateDataStartTime ) );
+				GenomePlot.loadedResources++;
+
 				d3.text( GenomePlot.copyNumberStateDataFile, "text/csv",
 			//	fetchData( GenomePlot.copyNumberStateDataFile,
 					function( data )
 					{
 						var endTime = performance.now();
 						console.info( sprintf( "%-20s Finished loading CNV Intervals file: %s at %.4fms (duration: %.4f seconds)", "initData():", GenomePlot.copyNumberStateDataFile, endTime, ( ( endTime - GenomePlot.copyNumberStateDataStartTime ) / 1000 ) ) );
+						GenomePlot.loadedResources--;
 
 						GenomePlot.copyNumberStateData = GenomePlot.processCopyNumberStateData(data);
 
@@ -337,12 +343,15 @@ GenomePlot.initData = function ()
 			.done (function () {
 				GenomePlot.cytoBandDataStartTime = performance.now();
 				console.info( sprintf( "%-20s Started loading Cytoband file: %s at %.4fms", "initData():", GenomePlot.cytoBandFile, GenomePlot.cytoBandDataStartTime ) );
+				GenomePlot.loadedResources++;
+
 				d3.json( GenomePlot.cytoBandFile,
 					function( error, data ) {
 			//	fetchData( GenomePlot.cytoBandFile,
 			//		function( data ) {
 						var endTime = performance.now();
 						console.info( sprintf( "%-20s Finished loading Cytoband file: %s at %.4fms (duration: %.4f seconds)", "initData():", GenomePlot.cytoBandFile, endTime, ( ( endTime - GenomePlot.cytoBandDataStartTime ) / 1000 ) ) );
+						GenomePlot.loadedResources--;
 
 						GenomePlot.cytoBandData = data;
 
@@ -372,10 +381,13 @@ GenomePlot.initData = function ()
 			.done (function () {
 				GenomePlot.alterationsDataStartTime = performance.now();
 				console.info( sprintf( "%-20s Started loading Alterations file: %s at %.4fms", "initData():", GenomePlot.alterationsDataFile, GenomePlot.alterationsDataStartTime ) );
+				GenomePlot.loadedResources++;
+
 				d3.text( GenomePlot.alterationsDataFile, "text/csv", function( data )
 				{
 					var endTime = performance.now();
 					console.info( sprintf( "%-20s Finished loading Alterations file: %s at %.4fms (duration: %.4f seconds)", "initData():", GenomePlot.alterationsDataFile, endTime, ( ( endTime - GenomePlot.alterationsDataStartTime ) / 1000 ) ) );
+					GenomePlot.loadedResources--;
 
 					GenomePlot.alterationsData = GenomePlot.processAlterationsData(data);
 
@@ -2456,6 +2468,8 @@ $(document).ready( function()
 		GenomePlot.BASE_ALL_MAX += GenomePlot.chromosomes[ (chrom_id+1).toString() ].genomicSize;
 	}
 
+	GenomePlot.loadedResources = 0;
+
 	GenomePlot.parseQueryString();
 
 	GenomePlot.initGUI();
@@ -2496,12 +2510,12 @@ $(document).ready( function()
 		}
 	}, 100 );
 
-	GenomePlot.drawableCopyNumber30000 = setInterval( function()
+	GenomePlot.drawableResources = setInterval( function()
 	{
 		// call, once loading of data has completed
-		if( GenomePlot.copyNumber30000Data !== undefined )
+		if( GenomePlot.loadedResources === 0 )
 		{
-			clearInterval( GenomePlot.drawableCopyNumber30000 );
+			clearInterval( GenomePlot.drawableResources );
 
 			toggleElementVisibilitySlow( $( "#loading_panel" ) );
 
