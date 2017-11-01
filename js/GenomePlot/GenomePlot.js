@@ -1267,6 +1267,8 @@ GenomePlot.drawAlterations = function ()
 	d3.selectAll(".alterationsIndicator").remove();
 	d3.selectAll(".alterations").remove();
 
+	if( GenomePlot.alterationsData === undefined ) return;
+
 	if( GenomePlot.junctionsParams.drawType === "None" ) return;
 
 	if( GenomePlot.graphTypeParams.graphType === "Circos" ) return;
@@ -1427,7 +1429,9 @@ GenomePlot.drawSVGCopyNumber = function()
 	d3.selectAll(".copycircles").remove();
 	d3.selectAll(".copylines").remove();
 
-	if( GenomePlot.copyNumberParams.drawType === "None" )	return;
+	if( GenomePlot.copyNumberData === undefined ) return;
+
+	if( GenomePlot.copyNumberParams.drawType === "None" ) return;
 
 	var startTime = performance.now();
 //	if( GenomePlot.debug ) console.info( sprintf( "%-20s %.4fms", "drawSVGCopyNumber():", startTime ) );
