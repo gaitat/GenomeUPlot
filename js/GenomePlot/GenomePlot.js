@@ -622,7 +622,7 @@ GenomePlot.setupContainer = function ()
 GenomePlot.drawBackground = function ()
 {
 	var startTime = performance.now();
-//	if( GenomePlot.debug ) console.info( sprintf( "%-20s %.4fms", "drawBackground():", startTime ) );
+	if( GenomePlot.debug ) console.info( sprintf( "%-20s %.4fms", "drawBackground():", startTime ) );
 
 	// remove and recreate the main frame
 	d3.select( "#groupMainFrame" ).remove();
@@ -959,7 +959,7 @@ GenomePlot.drawCytobands = function ()
 //	if( GenomePlot.cytoBandsParams.visibility < 1 ) return;
 
 	var startTime = performance.now();
-//	if( GenomePlot.debug ) console.info( sprintf( "%-20s %.4fms", "drawCytobands():", startTime ) );
+	if( GenomePlot.debug ) console.info( sprintf( "%-20s %.4fms", "drawCytobands():", startTime ) );
 
 	// the json file has been cleaned of extraneous chromosomes
 	if( GenomePlot.graphTypeParams.graphType === "U-Shape" )
@@ -1274,7 +1274,7 @@ GenomePlot.drawAlterations = function ()
 	if( GenomePlot.graphTypeParams.graphType === "Circos" ) return;
 
 	var startTime = performance.now();
-//	if( GenomePlot.debug ) console.info( sprintf( "%-20s %.4fms", "drawAlterations():", startTime ) );
+	if( GenomePlot.debug ) console.info( sprintf( "%-20s %.4fms", "drawAlterations():", startTime ) );
 
 	// first filter the data for the correct chromosome numbers and
 	// then take the max(Nassoc) of the remaining GenomePlot.alterationsData
@@ -1434,7 +1434,7 @@ GenomePlot.drawSVGCopyNumber = function()
 	if( GenomePlot.copyNumberParams.drawType === "None" ) return;
 
 	var startTime = performance.now();
-//	if( GenomePlot.debug ) console.info( sprintf( "%-20s %.4fms", "drawSVGCopyNumber():", startTime ) );
+	if( GenomePlot.debug ) console.info( sprintf( "%-20s %.4fms", "drawSVGCopyNumber():", startTime ) );
 
 	{
 		if( GenomePlot.copyNumberParams.drawType === "Lines" )
