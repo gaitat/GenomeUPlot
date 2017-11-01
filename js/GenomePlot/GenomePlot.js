@@ -1429,88 +1429,80 @@ GenomePlot.drawSVGCopyNumber = function()
 	d3.selectAll(".copycircles").remove();
 	d3.selectAll(".copylines").remove();
 
-	if( GenomePlot.copyNumberData === undefined ) return;
-
-	if( GenomePlot.copyNumberParams.drawType === "None" ) return;
+	if( GenomePlot.copyNumberParams.drawType === "None"
+	||	GenomePlot.copyNumberParams.drawType !== "Lines" )
+		return;
 
 	var startTime = performance.now();
 	if( GenomePlot.debug ) console.info( sprintf( "%-20s %.4fms", "drawSVGCopyNumber():", startTime ) );
 
+	for( var chrom_id = 0; chrom_id < GenomePlot.NUM_CHROMS; chrom_id++ )
 	{
-		if( GenomePlot.copyNumberParams.drawType === "Lines" )
-		{
-			for( var chrom_id = 0; chrom_id < GenomePlot.NUM_CHROMS; chrom_id++ )
+		var dataX = GenomePlot.copyNumberData.toLegacy.wdnsPerChrom[ chrom_id ];
+		var dataY = GenomePlot.copyNumberData.toLegacy.frqPerChrom[ chrom_id ];
+
+		var line = d3.svg.line()
+			.x( function( d, i ) { return GenomePlot.linearGenomicToPaddedPixelScaleX( d.x + GenomePlot.chromPixelStarts[ chrom_id ].x ); } )
+			.y( function( d, i ) { return ( 1 - d.y ) * 0.5 * GenomePlot.scale * GenomePlot.pixelsPerLine + GenomePlot.linearWindowPixelToPaddedPixelScaleY( GenomePlot.chromPixelStarts[ chrom_id ].y ); } )											// translate y value to a pixel
+		;
+
+		// get the intervals corresponding to chrom_id
+		var dataCNVState = GenomePlot.copyNumberStateData
+			// if we are using the tableDataSelected make sure we use only the rows with NRD values defined
+			.filter( function( d ) { return d.NRD !== "" && (d.chrA-1) === chrom_id; } );
+
+		var dataC = new Array( dataX.length );
+
+		var i = 0, j = 0;
+		while( j < dataCNVState.length ) {
+			while( dataX[i] < dataCNVState[j].posA ) i++;
+			while( dataX[i] <= dataCNVState[j].posB )
 			{
-				var dataX = GenomePlot.copyNumberData.toLegacy.wdnsPerChrom[ chrom_id ];
-				var dataY = GenomePlot.copyNumberData.toLegacy.frqPerChrom[ chrom_id ];
+				dataC[i] = GenomePlot.copyNumberStateColor[ dataCNVState[j].state - 1 ];
 
-				var line = d3.svg.line()
-					.x( function( d, i ) { return GenomePlot.linearGenomicToPaddedPixelScaleX( d.x + GenomePlot.chromPixelStarts[ chrom_id ].x ); } )
-					.y( function( d, i ) { return ( 1 - d.y ) * 0.5 * GenomePlot.scale * GenomePlot.pixelsPerLine + GenomePlot.linearWindowPixelToPaddedPixelScaleY( GenomePlot.chromPixelStarts[ chrom_id ].y ); } )											// translate y value to a pixel
-				;
-
-				if( GenomePlot.copyNumberStateData !== undefined )
-				{
-					// get the intervals corresponding to chrom_id
-					var dataCNVState = GenomePlot.copyNumberStateData
-						// if we are using the tableDataSelected make sure we use only the rows with NRD values defined
-						.filter( function( d ) { return d.NRD !== "" && (d.chrA-1) === chrom_id; } );
-
-					var dataC = new Array( dataX.length );
-
-					var i = 0, j = 0;
-					while( j < dataCNVState.length ) {
-						while( dataX[i] < dataCNVState[j].posA ) i++;
-						while( dataX[i] <= dataCNVState[j].posB )
-						{
-							dataC[i] = GenomePlot.copyNumberStateColor[ dataCNVState[j].state - 1 ];
-
-							i++;
-						}
-
-						j++;
-					}
-
-					var dataXMasked = GenomePlot.copyNumberData.toLegacy.wdnsMaskedPerChrom[ chrom_id ];
-
-					var data = splitLinesToSegmentsPerCopyNumberState( dataX, dataXMasked, dataY, dataC );
-
-					for( var sc = 0; sc < GenomePlot.copyNumberStateColor.length; sc++ )
-					{
-						var lines =
-							GenomePlot.container
-								.append("g")
-									.attr( "class", "copylines" )
-									.style( {
-									//	"stroke": "gray",
-										"stroke": function() { return GenomePlot.copyNumberStateColor[sc]; },
-										"stroke-opacity": 0.75,
-										"stroke-width": 1,
-										"fill": "none",
-										"shape-rendering": "crispEdges",
-										"pointer-events": "none",
-									} )
-									.selectAll("path")
-										.data( data[sc] )
-						;
-
-						lines
-							.enter().append( "svg:path" )
-								.attr( "d", line )
-						;
-
-						lines.exit().remove();
-					}
-
-					// for the garbage collector
-					data = null;
-
-					// for the garbage collector
-					dataC = null;
-					dataCNVState = null;
-				}
+				i++;
 			}
+
+			j++;
 		}
+
+		var dataXMasked = GenomePlot.copyNumberData.toLegacy.wdnsMaskedPerChrom[ chrom_id ];
+
+		var data = splitLinesToSegmentsPerCopyNumberState( dataX, dataXMasked, dataY, dataC );
+
+		for( var sc = 0; sc < GenomePlot.copyNumberStateColor.length; sc++ )
+		{
+			var lines =
+				GenomePlot.container
+					.append("g")
+						.attr( "class", "copylines" )
+						.style( {
+						//	"stroke": "gray",
+							"stroke": function() { return GenomePlot.copyNumberStateColor[sc]; },
+							"stroke-opacity": 0.75,
+							"stroke-width": 1,
+							"fill": "none",
+							"shape-rendering": "crispEdges",
+							"pointer-events": "none",
+						} )
+						.selectAll("path")
+							.data( data[sc] )
+			;
+
+			lines
+				.enter().append( "svg:path" )
+					.attr( "d", line )
+			;
+
+			lines.exit().remove();
+		}
+
+		// for the garbage collector
+		data = null;
+
+		// for the garbage collector
+		dataC = null;
+		dataCNVState = null;
 	}
 
 	var endTime = performance.now();
@@ -2098,92 +2090,95 @@ GenomePlot.drawCircos = function ()
 		})
 	;
 
-	for( var chrom_id = 0; chrom_id < GenomePlot.NUM_CHROMS; chrom_id++ )
+	if( GenomePlot.copyNumberData !== undefined
+	&&	GenomePlot.copyNumberStateData !== undefined )
 	{
-		var dataX = GenomePlot.copyNumberData.toLegacy.wdnsPerChrom[ chrom_id ];
-		var dataY = GenomePlot.copyNumberData.toLegacy.frqPerChrom[ chrom_id ];
-
-		var dataXMasked = GenomePlot.copyNumberData.toLegacy.wdnsMaskedPerChrom[ chrom_id ];
-
-		if( GenomePlot.copyNumberStateData !== undefined )
+		for( var chrom_id = 0; chrom_id < GenomePlot.NUM_CHROMS; chrom_id++ )
 		{
-			// get the intervals corresponding to chrom_id
-			var dataCNVState = GenomePlot.copyNumberStateData
-				// if we are using the tableDataSelected make sure we use only the rows with NRD values defined
-				.filter( function( d ) { return d.NRD !== "" && (d.chrA-1) === chrom_id; } );
+			var dataX = GenomePlot.copyNumberData.toLegacy.wdnsPerChrom[ chrom_id ];
+			var dataY = GenomePlot.copyNumberData.toLegacy.frqPerChrom[ chrom_id ];
 
-			var dataC = new Array( dataX.length );
+			var dataXMasked = GenomePlot.copyNumberData.toLegacy.wdnsMaskedPerChrom[ chrom_id ];
 
-			var i = 0, j = 0;
-			while( j < dataCNVState.length ) {
-				while( dataX[i] < dataCNVState[j].posA ) i++;
-				while( dataX[i] <= dataCNVState[j].posB )
-				{
-					dataC[i] = GenomePlot.copyNumberStateColor[ dataCNVState[j].state - 1 ];
-
-					i++;
-				}
-
-				j++;
-			}
-
-function closureCopyNumberStateColor( i ) { return GenomePlot.copyNumberStateColor[i]; }
-
-			var data = splitLinesToSegmentsPerCopyNumberState( dataX, dataXMasked, dataY, dataC );
-
-			for( var sc = 0; sc < GenomePlot.copyNumberStateColor.length; sc++ )
 			{
-				var copynumber = [];
+				// get the intervals corresponding to chrom_id
+				var dataCNVState = GenomePlot.copyNumberStateData
+					// if we are using the tableDataSelected make sure we use only the rows with NRD values defined
+					.filter( function( d ) { return d.NRD !== "" && (d.chrA-1) === chrom_id; } );
 
-				for( var s = 0; s < data[sc].length; s++ )
-				{
-					for( var i = 0; i < data[sc][s].length; i++ ) {
-						copynumber.push({
-							block_id: "chr" + ((chrom_id+1) === 23 ? 'X' : ((chrom_id+1) === 24 ? 'Y' : (chrom_id+1))),
-							position: data[sc][s][i].x,
-							value: data[sc][s][i].y,
-						});
+				var dataC = new Array( dataX.length );
+
+				var i = 0, j = 0;
+				while( j < dataCNVState.length ) {
+					while( dataX[i] < dataCNVState[j].posA ) i++;
+					while( dataX[i] <= dataCNVState[j].posB )
+					{
+						dataC[i] = GenomePlot.copyNumberStateColor[ dataCNVState[j].state - 1 ];
+
+						i++;
 					}
+
+					j++;
 				}
 
-				circos
-					.line('copynumber' + (chrom_id+1) + sc, copynumber, {
-						outerRadius: 0.975,
-						innerRadius: 0.5,
-						direction: 'in',
-						maxGap: 1000000,
-						min: 0,
-						max: 4,
-						showAxesTooltip: false,
-						axes: [
-							{
-								color: 'blue',
-								opacity: 0.3,
-								position: 0.000001,
-							},
-							{
-								color: 'yellow',
-								opacity: 0.75,
-								position: 1,
-							},
-							{
-								color: 'red',
-								opacity: 0.3,
-								position: 2,
-							},
-						],
-						color: closureCopyNumberStateColor(sc),
-						tooltipContent: null,
-					})
-				;
+	function closureCopyNumberStateColor( i ) { return GenomePlot.copyNumberStateColor[i]; }
+
+				var data = splitLinesToSegmentsPerCopyNumberState( dataX, dataXMasked, dataY, dataC );
+
+				for( var sc = 0; sc < GenomePlot.copyNumberStateColor.length; sc++ )
+				{
+					var copynumber = [];
+
+					for( var s = 0; s < data[sc].length; s++ )
+					{
+						for( var i = 0; i < data[sc][s].length; i++ ) {
+							copynumber.push({
+								block_id: "chr" + ((chrom_id+1) === 23 ? 'X' : ((chrom_id+1) === 24 ? 'Y' : (chrom_id+1))),
+								position: data[sc][s][i].x,
+								value: data[sc][s][i].y,
+							});
+						}
+					}
+
+					circos
+						.line('copynumber' + (chrom_id+1) + sc, copynumber, {
+							outerRadius: 0.975,
+							innerRadius: 0.5,
+							direction: 'in',
+							maxGap: 1000000,
+							min: 0,
+							max: 4,
+							showAxesTooltip: false,
+							axes: [
+								{
+									color: 'blue',
+									opacity: 0.3,
+									position: 0.000001,
+								},
+								{
+									color: 'yellow',
+									opacity: 0.75,
+									position: 1,
+								},
+								{
+									color: 'red',
+									opacity: 0.3,
+									position: 2,
+								},
+							],
+							color: closureCopyNumberStateColor(sc),
+							tooltipContent: null,
+						})
+					;
+				}
+
+				// for the garbage collector
+				data = null;
+
+				// for the garbage collector
+				dataC = null;
+				dataCNVState = null;
 			}
-
-			// for the garbage collector
-			data = null;
-
-			// for the garbage collector
-			dataC = null;
-			dataCNVState = null;
 		}
 	}
 
