@@ -3,9 +3,7 @@
 # algorithmVersion: 2.0
 # limInp: 4
 # inpVal: 0.1636935
-# normalPostProcessingDir: /data5/experpath/vasm/vasm/NextGen/Projects/Tcell/TC30019/GRCh38/svar-1
 # normalSampleName: normalPN2
-# normalYPostProcessingDir: /data5/experpath/vasm/vasm/NextGen/Projects/Tcell/TC30108/GRCh38/svar-1
 # normalYSampleName: TCL028_PB
 # qualityPreNorm: 2.8868347
 # qualityPostNorm: 1.3455543
