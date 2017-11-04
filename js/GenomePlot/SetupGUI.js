@@ -310,6 +310,49 @@ GenomePlot.initGUI = function()
 
 	///////////////////////////////////////////////////////////////////////////
 
+	GenomePlot.gui.xp = GenomePlot.gui.addFolder ("EXPORT");
+
+	var png = { savePNG:
+		function()
+		{
+			var svg = ($("#svgContainer")[0]).getElementsByTagName("svg")[0];	// the last [0] will pick the first svg in the page
+			var name = ( GenomePlot.graphTypeParams.graphType === "Circos" ? "circos" : "genomeU" ) + "plot_" + GenomePlot.sampleId +
+				( GenomePlot.graphTypeParams.graphType === "Circos" ?
+					"_size_r" + GenomePlot.graphTypeCircos.outerRadius :
+					"_size_w" + GenomePlot.innerWidth + '_h' + GenomePlot.innerHeight ) + ".png";
+
+			// from: http://spin.atomicobject.com/2014/01/21/convert-svg-to-png/
+			svgAsDataUri (svg, 1.0, function(uri)
+			{
+				var image = new Image();
+				image.src = uri;
+				image.onload = function()
+				{
+					var canvas = document.createElement('canvas');
+					canvas.width = image.width;
+					canvas.height = image.height;
+					var context = canvas.getContext('2d');
+					context.drawImage(image, 0, 0);													// draw the svg canvas
+
+					var png = canvas.toDataURL('image/png');
+
+					var a = document.createElement('a');
+					a.download = name;
+					a.href = png;
+					document.body.appendChild(a);
+					a.click();
+				};
+			} );
+		}
+	};
+
+	GenomePlot.gui.xp.add (png, "savePNG").name("Image <span style='float: right;'>(PNG)</span>")
+		.title("Export plot to png format");
+
+	GenomePlot.gui.xp.open();
+
+	///////////////////////////////////////////////////////////////////////////
+
 	// hide the original Close Controls button
 	hideElementDisplay($('div.close-button'));
 
