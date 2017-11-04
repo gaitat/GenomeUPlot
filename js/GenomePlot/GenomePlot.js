@@ -695,7 +695,7 @@ GenomePlot.drawBackground = function ()
 				   "-moz-user-select": "text",
 						"user-select": "text",
 			} )
-		.text( ( GenomePlot.graphTypeParams.graphType === "Circos" ? "Circos" : "Genome" ) + " plot of " + GenomePlot.sampleId )
+		.text( ( GenomePlot.graphTypeParams.graphType === "Circos" ? "Circos " : "Genome U-" ) + "plot of " + GenomePlot.sampleId )
 		.each( vCenter( GenomePlot.margin.top, -1, - fontHeight / 3 ) )
 	;
 
