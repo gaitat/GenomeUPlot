@@ -1946,7 +1946,11 @@ GenomePlot.updateZoom = function ( t, s )
 	GenomePlot.drawVerticalDividers();
 
 	GenomePlot.drawCytobands();
-	GenomePlot.drawSVGCopyNumber();
+
+	if( GenomePlot.copyNumberData !== undefined &&
+		GenomePlot.copyNumberStateData !== undefined )
+		GenomePlot.drawSVGCopyNumber();
+
 	GenomePlot.drawAlterations();
 
 	// set the opacity of the vertical labels depending on how much of the chromosome we see in out viewport
@@ -2518,7 +2522,10 @@ $(document).ready( function()
 
 			toggleElementVisibilitySlow( $( "#loading_panel" ) );
 
-			GenomePlot.drawSVGCopyNumber();
+			if( GenomePlot.copyNumberData !== undefined &&
+				GenomePlot.copyNumberStateData !== undefined )
+				GenomePlot.drawSVGCopyNumber();
+
 			GenomePlot.drawAlterations();
 
 if( GenomePlot.criteriaRunAtStartup )
@@ -2576,8 +2583,12 @@ GenomePlot.debounced_draw = debounce( function()
 		GenomePlot.drawHorizontalDividers();
 		GenomePlot.drawVerticalDividers();
 
-		GenomePlot.drawSVGCopyNumber( true );
 		GenomePlot.drawCytobands();
+
+		if( GenomePlot.copyNumberData !== undefined &&
+			GenomePlot.copyNumberStateData !== undefined )
+			GenomePlot.drawSVGCopyNumber();
+
 		GenomePlot.drawAlterations();
 	}
 }, 250);	// debounced_draw
