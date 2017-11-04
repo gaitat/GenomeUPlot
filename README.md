@@ -15,21 +15,18 @@ The Genome U-Plot is a JavaScript tool to visualize Chromosomal abnormalities in
 ### Node.js server
 
 Node.js has a simple HTTP server package. To install:
-
 ```
 npm install http-server -g
 ```
 
 This will install http-server globally so that it may be run from the command line. 
 To run (from your local directory):
-
 ```
 http-server -p 8000
 ```
 
 ### To run the project
 Using a modern browser visit:
-
 ```
 http://localhost:8000/GenomePlot.html?sampleId=LNCAP
 ```
@@ -37,7 +34,6 @@ http://localhost:8000/GenomePlot.html?sampleId=LNCAP
 ## Data Visualization
 
 A sample (LNCAP) with all required files is provided in the `data` folder
-
 ```
 LNCAP/LNCAP_alts_comprehensive.csv  (Sample Rearrangements)
 LNCAP/LNCAP_cnvIntervals.csv        (Sample Copy Number Variation - Intervals)
@@ -45,15 +41,11 @@ LNCAP/LNCAP_genomePlot_cnv30.json   (Sample Copy Number Variation - Raw Frequenc
 LNCAP/LNCAP_visualization.json      (Sample Definition)
 ```
 
-In order to run the application against a different sample (eg. MY_SAMPLE) you need to create 
-an appropriate folder and file structure replacing for example LNCAP with MY_SAMPLE. Finally 
-don't forget to replace your sample name in the URL parameter of the app.
+In order to run the application against a different sample (eg. MY_SAMPLE) you need to create an appropriate folder and file structure replacing for example LNCAP with MY_SAMPLE. Finally don't forget to replace your sample name in the URL parameter of the app.
 
 ### Reference file
 
--   A reference file is provided by the visualization (`reference/cytobands/hg38/cytoBand.json`), 
-however if you want to use your own you may download and uncompress a definition file from 
-<ftp://hgdownload.cse.ucsc.edu/goldenPath/hg38/database/cytoBand.txt.gz>. 
+-   A reference file is provided by the visualization (`reference/cytobands/hg38/cytoBand.json`), however if you want to use your own you may download and uncompress a definition file from <ftp://hgdownload.cse.ucsc.edu/goldenPath/hg38/database/cytoBand.txt.gz>. 
 Then you must convert the file to a json format of the following form:
 ```javascript
 [
@@ -88,25 +80,41 @@ A sample specific json file must be provided (as in `LNCAP\LNCAP_visualization.j
 
 ### Sample Rearrangements
 
-In order to visualize chromosomal rearrangements, a csv file is required 
-(as in `LNCAP/LNCAP_alts_comprehensive.csv`) and the following columns of integers 
-must be supplied:
+In order to visualize chromosomal rearrangements, a csv file is required (as in `LNCAP/LNCAP_alts_comprehensive.csv`) and the following columns of integers must be supplied:
 ```
-    Nassoc,chrA,chrB,posA,posB
+Nassoc,chrA,chrB,posA,posB
 ```
 where *Nassoc* is the number (integer) of supporting fragments of the events.
 
 ### Sample Copy Number Variation
 
-In order to visualize copy number, two files of a specific format must be supplied. First, a file 
-(as in `LNCAP/LNCAP_genomePlot_cnv30.json`) with the raw frequency data from a 30000 bin 
-moving window.
+In order to visualize copy number, two files of a specific format must be supplied. First, a file (as in `LNCAP/LNCAP_genomePlot_cnv30.json`) with the raw frequency data from a 30000 bin moving window.
 
-The second file contains the copy number state information; a csv 
-file (as in `LNCAP/LNCAP_cnvIntervals.csv`) with the following columns must be supplied:
+The second file contains the copy number state information; a csv file (as in `LNCAP/LNCAP_cnvIntervals.csv`) with the following columns must be supplied:
 ```
-    chr,start,end,cnvState,nrd
+chr,start,end,cnvState,nrd
 ```
-where *cnvState* is one of 1 (loss), 2 (normal) or 3 (gain) and *nrd* is a floating point value 
-corresponding to the Normalized Read Depth score that provides a quantitative measure of how far 
-the CNV deviates from the calculated normal level (*nrd* = 2.0).
+where *cnvState* is one of 1 (loss), 2 (normal) or 3 (gain) and *nrd* is a floating point value corresponding to the Normalized Read Depth score that provides a quantitative measure of how far the CNV deviates from the calculated normal level (*nrd* = 2.0).
+
+## Variant Call Format (VCF) file Support
+
+In order to run the application against a sample that is stored in a **VCF** file, we provide an **R** script `vcftoUplot.R` (which resides in the `data` folder) that takes as input a **VCF** file (code tested with VCF v4.1 and v4.2) and produces the file structure hierarchy required by the Genome U-Plot in order to visualize the sample. Finally don't forget to replace your sample name in the URL parameter of the app.
+
+### To run `vcftoUplot.R`
+
+Given a **VCF** sample file NA12878.vcf (provided in the `data` folder), on the Windows platform you can run 
+```
+"C:\Program Files\R\your_version_of_R\bin\Rscript.exe" vcftoUplot.R NA12878.vcf
+```
+
+This will produce the following folder hierarchy 
+```
+NA12878/
+├── NA12878_alts_comprehensive.csv
+└── NA12878_visualization.json
+```
+
+Then, using a modern browser visit:
+```
+http://localhost:8000/GenomePlot.html?sampleId=NA12878
+```
