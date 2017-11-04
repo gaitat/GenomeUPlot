@@ -271,7 +271,7 @@ GenomePlot.initGUI = function()
 		});
 
 	GenomePlot.gui.utilities.additionalXAxis = GenomePlot.gui.ut.add (GenomePlot.gui.utilities, "additionalAxis")
-		.name("Additional X-Axes").title("Enable or disable x-axis for the right side of the chromosomes")
+		.name("Additional X-Axes").title("Enable or disable x-axes for the right side of the chromosomes which have been grouped in 4 categories")
 		.onChange (function (value)
 		{
 			if( GenomePlot.miscParams.showAdditionalAxis === value ) return;
