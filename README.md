@@ -118,3 +118,5 @@ Then, using a modern browser visit:
 ```
 http://localhost:8000/GenomePlot.html?sampleId=NA12878
 ```
+
+**Note:** For this particular example you should use the *"Filter on # of Frags"* GUI option in order to reduce the number of visualized Chromosomal abnormalities. You can also uncheck the *"Line width to # Frags"* to disassociate the line thickness from the number of fragments supporting the event. 
