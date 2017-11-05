@@ -98,7 +98,7 @@ where *cnvState* is one of 1 (loss), 2 (normal) or 3 (gain) and *nrd* is a float
 
 ## Variant Call Format (VCF) file Support
 
-In order to run the application against a sample that is stored in a **VCF** file, we provide an **R** script `vcftoUplot.R` (which resides in the `data` folder) that takes as input a **VCF** file (code tested with VCF v4.1 and v4.2) and produces the file structure hierarchy required by the Genome U-Plot in order to visualize the sample. Finally don't forget to replace your sample name in the URL parameter of the app.
+In order to run the application against a sample that is stored in a **VCF** file, we provide an **R** script `vcftoUplot.R` (which resides in the `data` folder and was tested with R-3.3.3) that takes as input a **VCF** file (tested VCF v4.1 and v4.2) and produces the file structure hierarchy required by the Genome U-Plot in order to visualize the sample. Finally don't forget to replace your sample name in the URL parameter of the app.
 
 ### To run `vcftoUplot.R`
 
