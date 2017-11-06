@@ -33,7 +33,7 @@ http://localhost:8000/GenomePlot.html?sampleId=LNCAP
 
 ## Data Visualization
 
-A sample (LNCAP) with all required files is provided in the `data` folder
+A sample (LNCAP) with all required files is provided in the `data` directory
 ```
 LNCAP/LNCAP_alts_comprehensive.csv  (Sample Rearrangements)
 LNCAP/LNCAP_cnvIntervals.csv        (Sample Copy Number Variation - Intervals)
@@ -41,11 +41,11 @@ LNCAP/LNCAP_genomePlot_cnv30.json   (Sample Copy Number Variation - Raw Frequenc
 LNCAP/LNCAP_visualization.json      (Sample Definition)
 ```
 
-In order to run the application against a different sample (eg. MY_SAMPLE) you need to create an appropriate folder and file structure replacing for example LNCAP with MY_SAMPLE. Finally don't forget to replace your sample name in the URL parameter of the app.
+In order to run the application against a different sample (eg. MY_SAMPLE) you need to create an appropriate directory and file structure replacing for example LNCAP with MY_SAMPLE. Finally don't forget to replace your sample name in the URL parameter of the app.
 
 ### Reference file
 
--   A reference file is provided by the visualization (`reference/cytobands/hg38/cytoBand.json`), however if you want to use your own you may download and uncompress a definition file from <ftp://hgdownload.cse.ucsc.edu/goldenPath/hg38/database/cytoBand.txt.gz>. 
+-   A Human Genome Assembly GRCh38 cytobands reference file is provided by the visualization (`reference/cytobands/hg38/cytoBand.json`), however if you want to use your own you may download and uncompress a definition file from <ftp://hgdownload.cse.ucsc.edu/goldenPath/hg38/database/cytoBand.txt.gz>. 
 Then you must convert the file to a json format of the following form:
 ```javascript
 [
@@ -98,16 +98,16 @@ where *cnvState* is one of 1 (loss), 2 (normal) or 3 (gain) and *nrd* is a float
 
 ## Variant Call Format (VCF) file Support
 
-In order to run the application against a sample that is stored in a **VCF** file, we provide an **R** script `vcftoUplot.R` (which resides in the `data` folder and was tested with R-3.3.3) that takes as input a **VCF** file (tested VCF v4.1 and v4.2) and produces the file structure hierarchy required by the Genome U-Plot in order to visualize the sample. Finally don't forget to replace your sample name in the URL parameter of the app.
+In order to run the application against a sample that is stored in a **VCF** file, we provide an **R** script `vcftoUplot.R` (which resides in the `data` directory). The script was tested with R-3.3.3 and requires the R package `VariantAnnotation`, which will be automatically installed if not present. The script takes as input a **VCF** file (tested VCF v4.1 and v4.2) and produces the file structure hierarchy required by the Genome U-Plot in order to visualize the sample. Finally don't forget to replace your sample name in the URL parameter of the app.
 
 ### To run `vcftoUplot.R`
 
-Given a **VCF** sample file NA12878.vcf (provided in the `data` folder), on the Windows platform you can run 
+Given a **VCF** sample file NA12878.vcf (provided in the `data` directory), run
 ```
-"C:\Program Files\R\your_version_of_R\bin\Rscript.exe" vcftoUplot.R NA12878.vcf
+Rscript vcftoUplot.R NA12878.vcf
 ```
 
-This will produce the following folder hierarchy 
+This will produce the following directory hierarchy 
 ```
 NA12878/
 ├── NA12878_alts_comprehensive.csv
@@ -120,3 +120,5 @@ http://localhost:8000/GenomePlot.html?sampleId=NA12878
 ```
 
 **Note:** For this particular example you should use the *"Filter on # of Frags"* GUI option in order to reduce the number of visualized Chromosomal abnormalities. You can also uncheck the *"Line width to # Frags"* to disassociate the line thickness from the number of fragments supporting the event. 
+
+**Note II:** The Human Genome Assembly GRCh38 is assumed
