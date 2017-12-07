@@ -1167,7 +1167,7 @@ GenomePlot.drawSVGAlterationsPaths = function( alterationsData )
 					.transition()
 					.duration( 200 )
 					.style( "opacity", .9 );
-				GenomePlot.tooltip.html("Chr" + d.chrA + " - Chr" + d.chrB + ", Associates: " + (d.Nassoc === "" ? 0 : d.Nassoc))
+				GenomePlot.tooltip.html("Chr" + d.chrA + " (" + Math.round(+d.posA/1000).toLocaleString() + "KB)" + " - Chr" + d.chrB + " (" + Math.round(+d.posB/1000).toLocaleString() + "KB)" + ", Associates: " + (d.Nassoc === "" ? 0 : d.Nassoc))
 					.style( "left", (d3.event.pageX + 10) + "px")
 					.style( "top", (d3.event.pageY - 30) + "px");
 			}
