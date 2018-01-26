@@ -4,7 +4,7 @@
 "use strict";
 
 // d3.scan which does not exist in v3
-function scan(values, compare) {
+export function scan(values, compare) {
   if (!(n = values.length)) return;
   var n,
       i = 0,

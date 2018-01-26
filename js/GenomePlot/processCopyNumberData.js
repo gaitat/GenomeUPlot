@@ -1,6 +1,11 @@
 /**
  * @author gaitat / Athanasios Gaitatzes (Saki)
  */
+
+import GenomePlot from './GenomePlot';
+import { assert } from '../local_lib/utils';
+import sprintf from '../../vendor/sprintf';
+
 "use strict";
 
 GenomePlot.cnvBinnedToLegacy = function( dataValues, normalValues )

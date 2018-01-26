@@ -1,6 +1,11 @@
 /**
  * @author gaitat / Athanasios Gaitatzes (Saki)
  */
+
+import '../../vendor/d3.js/d3-comparator';
+
+import GenomePlot from './GenomePlot';
+
 "use strict";
 
 GenomePlot.processAlterationsData = function(data)

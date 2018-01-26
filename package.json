@@ -1,0 +1,61 @@
+{
+  "name": "GenomeUPlot",
+  "version": "0.0.1",
+  "description": "GenomeUPlot",
+  "license": "MIT",
+  "browserslist": [
+    "> 1%"
+  ],
+  "scripts": {
+    "start": "yarn dist && babel-node src/server --dist",
+    "start-dev": "webpack-dev-server --profile --inline --colors",
+    "lint": "eslint src webpack.config.babel.js --ext .js",
+    "test": "yarn lint && jest --coverage",
+    "precommit": "yarn test",
+    "build": "rimraf build && webpack --progress --profile --colors",
+    "dist": "rimraf dist && cross-env NODE_ENV=production webpack --progress --profile"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.23.0",
+    "bootstrap": "3.3.6",
+    "circos": "^2.1.0",
+    "d3": "3.5.6",
+    "d3-comparator": "^0.1.0",
+    "express": "^4.16.2",
+    "jquery": "2.2.0",
+    "jquery-ui": "1.11.1",
+    "jquery.scrollto": "^2.1.2",
+    "save-svg-as-png": "^1.2.0",
+    "svg-intersections": "^0.3.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.0",
+    "babel-core": "^6.24.0",
+    "babel-eslint": "^8.0.3",
+    "babel-jest": "^21.2.0",
+    "babel-loader": "^7.0.0",
+    "babel-preset-env": "^1.2.1",
+    "common-tags": "^1.4.0",
+    "concurrently": "^3.4.0",
+    "cross-env": "^5.1.1",
+    "css-loader": "^0.28.7",
+    "eslint": "^4.12.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-compat": "^2.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.5.1",
+    "exports-loader": "^0.6.4",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.6",
+    "html-webpack-plugin": "^2.28.0",
+    "imports-loader": "^0.7.1",
+    "nodemon": "^1.11.0",
+    "raw-loader": "^0.5.1",
+    "rimraf": "^2.6.1",
+    "style-loader": "^0.19.1",
+    "url-loader": "^0.6.2",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.4.2"
+  }
+}

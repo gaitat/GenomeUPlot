@@ -3,7 +3,7 @@
  */
 "use strict";
 
-function parseBoolean (string)
+export function parseBoolean (string)
 {
 	switch (String (string).toLowerCase ())
 	{
@@ -28,69 +28,69 @@ function parseBoolean (string)
 // Note: toggling 'display' of an element rearranges the elements around it (layout of page changes)
 
 // .show(), .hide() and .toggle() affect the "display" CSS property
-function hideElementDisplay (element)		{ element.hide(); }
-function hideElementDisplaySlow (element)	{ element.hide('slow'); }
-function hideElementDisplayFast (element)	{ element.hide('fast'); }
+export function hideElementDisplay (element)		{ element.hide(); }
+export function hideElementDisplaySlow (element)	{ element.hide('slow'); }
+export function hideElementDisplayFast (element)	{ element.hide('fast'); }
 
-function showElementDisplay (element)		{ element.show(); }
-function showElementDisplaySlow (element)	{ element.show('slow'); }
-function showElementDisplayFast (element)	{ element.show('fast'); }
+export function showElementDisplay (element)		{ element.show(); }
+export function showElementDisplaySlow (element)	{ element.show('slow'); }
+export function showElementDisplayFast (element)	{ element.show('fast'); }
 
-function toggleElementDisplay (element)		{ element.toggle(); }
-function toggleElementDisplaySlow (element)	{ element.toggle('slow'); }
-function toggleElementDisplayFast (element)	{ element.toggle('fast'); }
+export function toggleElementDisplay (element)		{ element.toggle(); }
+export function toggleElementDisplaySlow (element)	{ element.toggle('slow'); }
+export function toggleElementDisplayFast (element)	{ element.toggle('fast'); }
 
 // .fadeIn() and .fadeOut() affect the "opacity" CSS property
-function hideElementSlow (element)	{ element.fadeOut('slow'); }
-function hideElementFast (element)	{ element.fadeOut('fast'); }
+export function hideElementSlow (element)	{ element.fadeOut('slow'); }
+export function hideElementFast (element)	{ element.fadeOut('fast'); }
 
-function showElementSlow (element)	{ element.fadeIn('slow'); }
-function showElementFast (element)	{ element.fadeIn('fast'); }
+export function showElementSlow (element)	{ element.fadeIn('slow'); }
+export function showElementFast (element)	{ element.fadeIn('fast'); }
 
-function showError (message)
+export function showError (message)
 {
 	$( "#error_panel .message" ).empty ();
 	$( "#error_panel .message" ).append( message );
 	showElementVisibility( $( "#error_panel" ) );
 }
-function showErrorSlow (message)
+export function showErrorSlow (message)
 {
 	$( "#error_panel .message" ).empty ();
 	$( "#error_panel .message" ).append( message );
 	showElementVisibilitySlow( $( "#error_panel" ) );
 }
-function showErrorFast (message)
+export function showErrorFast (message)
 {
 	$( "#error_panel .message" ).empty ();
 	$( "#error_panel .message" ).append( message );
 	showElementVisibilityFast( $( "#error_panel" ) );
 }
 
-function showInfo (message)			{ showError (message); }
-function showInfoSlow (message)		{ showErrorSlow (message); }
-function showInfoFast (message)		{ showErrorFast (message); }
+export function showInfo (message)			{ showError (message); }
+export function showInfoSlow (message)		{ showErrorSlow (message); }
+export function showInfoFast (message)		{ showErrorFast (message); }
 
 // Note: toggling 'visibility' of an element does not rearrange the elements around it (layout of page stays the same)
 
-function hideElementVisibility (element)		{ element.css( "visibility", "hidden" ); }
-function hideElementVisibilitySlow (element)	{ element.animate( { opacity: 0.0 }, 600, function() { element.css( { "visibility": "hidden" } ); } ); }
-function hideElementVisibilityFast (element)	{ element.animate( { opacity: 0.0 }, 200, function() { element.css( { "visibility": "hidden" } ); } ); }
+export function hideElementVisibility (element)		{ element.css( "visibility", "hidden" ); }
+export function hideElementVisibilitySlow (element)	{ element.animate( { opacity: 0.0 }, 600, function() { element.css( { "visibility": "hidden" } ); } ); }
+export function hideElementVisibilityFast (element)	{ element.animate( { opacity: 0.0 }, 200, function() { element.css( { "visibility": "hidden" } ); } ); }
 
-function showElementVisibility (element)		{ element.css( "visibility", "visible" ); }
-function showElementVisibilitySlow (element)	{ element.css( "visibility", "visible" ).animate( { opacity: 1.0 }, 600 ); }
-function showElementVisibilityFast (element)	{ element.css( "visibility", "visible" ).animate( { opacity: 1.0 }, 200 ); }
+export function showElementVisibility (element)		{ element.css( "visibility", "visible" ); }
+export function showElementVisibilitySlow (element)	{ element.css( "visibility", "visible" ).animate( { opacity: 1.0 }, 600 ); }
+export function showElementVisibilityFast (element)	{ element.css( "visibility", "visible" ).animate( { opacity: 1.0 }, 200 ); }
 
-function toggleElementVisibility (element)
+export function toggleElementVisibility (element)
 {
 	element.css( "visibility", element.css( "visibility" ) === "hidden" ? "visible" : "hidden" );
 }
-function toggleElementVisibilitySlow (element)
+export function toggleElementVisibilitySlow (element)
 {
 	element.css( "visibility", element.css( "visibility" ) === "hidden" ?
 		showElementVisibilitySlow (element) :
 		hideElementVisibilitySlow (element) );
 }
-function toggleElementVisibilityFast (element)
+export function toggleElementVisibilityFast (element)
 {
 	element.css( "visibility", element.css( "visibility" ) === "hidden" ?
 		showElementVisibilityFast (element) :
@@ -98,9 +98,9 @@ function toggleElementVisibilityFast (element)
 }
 
 // could use isHidden (element)
-function isVisible (element)	{ return element.is(":visible"); }
+export function isVisible (element)	{ return element.is(":visible"); }
 
-function resetDOM ()
+export function resetDOM ()
 {
 	showElementFast ($('#drop_on_me'));
 	showElementFast ($('#instructions'));

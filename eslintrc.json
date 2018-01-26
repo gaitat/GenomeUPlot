@@ -1,0 +1,20 @@
+{
+  "extends": [
+    "airbnb"
+  ],
+  "plugins": [
+    "compat"
+  ],
+  "env": {
+    "browser": true,
+    "jest": true,
+    "jquery": true
+  },
+  "rules": {
+    "compat/compat": 2,
+    "func-names": "off",
+    "no-console": "off",
+    "no-underscore-dangle": "off",
+    "no-restricted-syntax": ["error", "WithStatement", "ForInStatement", "LabeledStatement", "BinaryExpression[operator='in']"]
+  }
+}

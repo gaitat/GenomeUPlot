@@ -2,6 +2,17 @@
  * @author gaitat / Athanasios Gaitatzes (Saki)
  */
 
+import Circos from '../../vendor/circos.min';
+
+import { getQueryVariable } from '../local_lib/utils';
+import sprintf from '../../vendor/sprintf';
+import {
+    toggleElementVisibilitySlow,
+    showElementDisplay,
+    hideElementVisibilityFast
+} from '../local_lib/domOperations';
+import { pathIntersections } from "../local_lib/pathIntersections";
+
 var GenomePlot = GenomePlot || { REVISION: '1.0e-6' };
 
 "use strict";
@@ -2080,21 +2091,21 @@ GenomePlot.drawCircos = function ()
 			},
 			tooltipContent: null,	// function (d) { return d.name },
 		})
-		.chords('alterationsIntra', alterationsIntra, {
-			logScale: false,
-			opacity: 0.75,
-			color: GenomePlot.junctionNormalColor,
-			tooltipContent: null,	// function (d) { return d.source.id + ' ➤ ' + d.target.id + ': ' + d.value; },
-		})
-		.chords('alterationsInter', alterationsInter, {
-			logScale: false,
-			opacity: 0.75,
-			color: "orange",
-			tooltipContent: null,	// function (d) { return d.source.id + ' ➤ ' + d.target.id + ': ' + d.value; },
-		})
+		// .chords('alterationsIntra', alterationsIntra, {
+		// 	logScale: false,
+		// 	opacity: 0.75,
+		// 	color: GenomePlot.junctionNormalColor,
+		// 	tooltipContent: null,	// function (d) { return d.source.id + ' ➤ ' + d.target.id + ': ' + d.value; },
+		// })
+		// .chords('alterationsInter', alterationsInter, {
+		// 	logScale: false,
+		// 	opacity: 0.75,
+		// 	color: "orange",
+		// 	tooltipContent: null,	// function (d) { return d.source.id + ' ➤ ' + d.target.id + ': ' + d.value; },
+		// })
 	;
 
-	if( GenomePlot.copyNumberData !== undefined
+	if( false && GenomePlot.copyNumberData !== undefined
 	&&	GenomePlot.copyNumberStateData !== undefined )
 	{
 		for( var chrom_id = 0; chrom_id < GenomePlot.NUM_CHROMS; chrom_id++ )
@@ -2611,3 +2622,5 @@ window.addEventListener( "keydown", GenomePlot.onKeyDown, false );
 
 // block right mouse menu pop up
 window.oncontextmenu = function() { return false; }
+
+export default GenomePlot;

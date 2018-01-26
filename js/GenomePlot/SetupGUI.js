@@ -2,6 +2,16 @@
  * @author gaitat / Athanasios Gaitatzes (Saki)
  */
 
+import dat from '../../vendor/dat-gui/dat.gui-0.5.1-plus.min';
+import { svgAsDataUri } from '../../vendor/saveSvgAsPng';
+
+import GenomePlot from './GenomePlot';
+import { hideElementDisplay, showElementDisplay } from '../local_lib/domOperations';
+import 'imports-loader?this=>window!../../vendor/viewportSize.min';
+
+import cssLocal from '!raw-loader!../../vendor/dat-gui/dat.gui.local.css';
+import cssLightTheme from '!raw-loader!../../vendor/dat-gui/dat.gui.light-theme.css';
+
 "use strict";
 
 GenomePlot.initGUI = function()
@@ -9,7 +19,14 @@ GenomePlot.initGUI = function()
 	GenomePlot.gui = new dat.GUI();
 //	GenomePlot.gui.close();
 
-	GenomePlot.gui.adjustWidth = 265;	// size of dat.GUI
+  [cssLocal, cssLightTheme].forEach(function (css) {
+    var injected = document.createElement('style');
+    injected.type = 'text/css';
+    injected.innerHTML = css;
+    document.getElementsByTagName('head')[0].appendChild(injected);
+  });
+
+  GenomePlot.gui.adjustWidth = 265;	// size of dat.GUI
 
 	///////////////////////////////////////////////////////////////////////////
 

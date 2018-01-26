@@ -1,4 +1,6 @@
-function pathIntersections(selector, options) {
+import svgIntersections from 'svg-intersections';
+
+export function pathIntersections(selector, options) {
 	options = options || {};
 
 	var debugContainer = options.debugContainer;
