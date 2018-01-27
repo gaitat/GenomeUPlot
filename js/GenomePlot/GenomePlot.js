@@ -2,7 +2,7 @@
  * @author gaitat / Athanasios Gaitatzes (Saki)
  */
 
-import Circos from '../../vendor/circos.min';
+import Circos from 'circos';
 
 import { getQueryVariable } from '../local_lib/utils';
 import sprintf from '../../vendor/sprintf';
@@ -2048,7 +2048,6 @@ GenomePlot.drawCircos = function ()
 	GenomePlot.graphTypeCircos.outerRadius = Math.max( chromRingThickness + 1, (GenomePlot.graphTypeCircos.width - labelOffset) / 2 - GenomePlot.graphTypeCircos.padding );
 	if( GenomePlot.debug ) console.log (sprintf ("%-20s radius dim: %d", "drawCircos():", GenomePlot.graphTypeCircos.outerRadius));
 
-	// from circos.js remove ".append("div").style("position","relative")" that interfered with the rendering of the svg
 	var circos = new Circos({
 		container: "#groupMainContainerContents",
 		width: GenomePlot.graphTypeCircos.width,
@@ -2199,6 +2198,8 @@ GenomePlot.drawCircos = function ()
 
 	circos.render();
 
+	// unwrap the svg from the div container
+  $('#groupMainContainerContents').find('svg').unwrap();
 }	// drawCircos
 
 GenomePlot.criteriaArcFactor = function()
