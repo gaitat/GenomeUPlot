@@ -6,13 +6,14 @@ import Circos from 'circos';
 import viewportSize from 'viewport-size';
 import sprintf from 'locutus/php/strings/sprintf';
 
-import { getQueryVariable } from '../local_lib/utils';
+import { getQueryVariable, saveJSONtoCSV } from '../local_lib/utils';
 import {
     toggleElementVisibilitySlow,
     showElementDisplay,
     hideElementVisibilityFast
 } from '../local_lib/domOperations';
 import { pathIntersections } from "../local_lib/pathIntersections";
+import { scan } from "../local_lib/utils-d3";
 
 "use strict";
 
