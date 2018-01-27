@@ -23,9 +23,10 @@
     "d3-comparator": "^0.1.0",
     "express": "^4.16.2",
     "jquery": "2.2.0",
-    "jquery-ui": "1.11.1",
+    "jquery-ui": "1.12.1",
     "jquery.scrollto": "^2.1.2",
     "save-svg-as-png": "^1.2.0",
+
     "svg-intersections": "^0.3.2"
   },
   "devDependencies": {
