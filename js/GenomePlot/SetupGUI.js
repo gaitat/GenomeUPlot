@@ -7,7 +7,6 @@ import { saveSvgAsPng } from 'save-svg-as-png';
 
 import GenomePlot from './GenomePlot';
 import { hideElementDisplay, showElementDisplay } from '../local_lib/domOperations';
-import 'imports-loader?this=>window!../../vendor/viewportSize.min';
 
 import cssLocal from '!raw-loader!../../vendor/dat-gui/dat.gui.local.css';
 import cssLightTheme from '!raw-loader!../../vendor/dat-gui/dat.gui.light-theme.css';

@@ -3,6 +3,7 @@
  */
 
 import Circos from 'circos';
+import viewportSize from 'viewport-size';
 import sprintf from 'locutus/php/strings/sprintf';
 
 import { getQueryVariable } from '../local_lib/utils';
@@ -2353,10 +2354,10 @@ GenomePlot.onKeyDown = function( event )
 
 GenomePlot.computeGraphSize = function ()
 {
-	GenomePlot.viewportWidth = window.viewportSize.getWidth() -
+	GenomePlot.viewportWidth = viewportSize.getWidth() -
 		parseFloat( $("#container").css( "margin-left" ).replace("px", "") ) -
 		parseFloat( $("#container").css( "margin-right" ).replace("px", "") );
-	GenomePlot.viewportHeight = window.viewportSize.getHeight();
+	GenomePlot.viewportHeight = viewportSize.getHeight();
 	if (GenomePlot.debug) console.log (sprintf ("%-20s viewport dims: %d x %d", "computeGraphSize():", GenomePlot.viewportWidth, GenomePlot.viewportHeight));
 
 	if( GenomePlot.viewportWidth <= 640

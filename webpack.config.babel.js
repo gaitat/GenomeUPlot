@@ -17,10 +17,6 @@ const webpackConfig = {
   module: {
     rules: [
       {
-        test: require.resolve('./vendor/viewportSize.min.js'),
-        use: 'imports-loader?this=>window',
-      },
-      {
         test: require.resolve('./vendor/dat-gui/dat.gui-0.5.1-plus.min.js'),
         use: 'exports-loader?dat'
       },
