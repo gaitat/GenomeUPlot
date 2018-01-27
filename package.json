@@ -20,7 +20,6 @@
     "bootstrap": "3.3.6",
     "circos": "^2.1.0",
     "d3": "3.5.6",
-    "d3-comparator": "^0.1.0",
     "express": "^4.16.2",
     "jquery": "2.2.0",
     "jquery-ui": "1.12.1",
