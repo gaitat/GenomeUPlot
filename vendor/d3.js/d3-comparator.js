@@ -11,16 +11,16 @@
         if (result !== 0) return result;
       }
       return 0;
-    }
+    };
 
     comparator.order = function(cmp, accessor) {
       cmps.push(cmp);
       accessors.push(accessor || identity);
       return comparator;
-    }
+    };
 
     return comparator;
-  }
+  };
   
   function identity(d) { return d; }
 })();

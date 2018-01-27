@@ -13,9 +13,9 @@ import {
 } from '../local_lib/domOperations';
 import { pathIntersections } from "../local_lib/pathIntersections";
 
-var GenomePlot = GenomePlot || { REVISION: '1.0e-6' };
-
 "use strict";
+
+var GenomePlot = GenomePlot || { REVISION: '1.0e-6' };
 
 GenomePlot.sampleGenome = "GRCh38";
 

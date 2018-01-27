@@ -1,7 +1,6 @@
 /**
  * @author gaitat / Athanasios Gaitatzes (Saki)
  */
-
 "use strict";
 
 export function assert ( condition, message )
