@@ -2091,21 +2091,21 @@ GenomePlot.drawCircos = function ()
 			},
 			tooltipContent: null,	// function (d) { return d.name },
 		})
-		// .chords('alterationsIntra', alterationsIntra, {
-		// 	logScale: false,
-		// 	opacity: 0.75,
-		// 	color: GenomePlot.junctionNormalColor,
-		// 	tooltipContent: null,	// function (d) { return d.source.id + ' ➤ ' + d.target.id + ': ' + d.value; },
-		// })
-		// .chords('alterationsInter', alterationsInter, {
-		// 	logScale: false,
-		// 	opacity: 0.75,
-		// 	color: "orange",
-		// 	tooltipContent: null,	// function (d) { return d.source.id + ' ➤ ' + d.target.id + ': ' + d.value; },
-		// })
+		.chords('alterationsIntra', alterationsIntra, {
+			logScale: false,
+			opacity: 0.75,
+			color: GenomePlot.junctionNormalColor,
+			tooltipContent: null,	// function (d) { return d.source.id + ' ➤ ' + d.target.id + ': ' + d.value; },
+		})
+		.chords('alterationsInter', alterationsInter, {
+			logScale: false,
+			opacity: 0.75,
+			color: "orange",
+			tooltipContent: null,	// function (d) { return d.source.id + ' ➤ ' + d.target.id + ': ' + d.value; },
+		})
 	;
 
-	if( false && GenomePlot.copyNumberData !== undefined
+	if( GenomePlot.copyNumberData !== undefined
 	&&	GenomePlot.copyNumberStateData !== undefined )
 	{
 		for( var chrom_id = 0; chrom_id < GenomePlot.NUM_CHROMS; chrom_id++ )
