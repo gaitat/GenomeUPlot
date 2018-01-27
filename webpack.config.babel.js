@@ -21,10 +21,6 @@ const webpackConfig = {
         use: 'exports-loader?dat'
       },
       {
-        test: require.resolve('./vendor/circos.min.js'),
-        use: 'exports-loader?Circos'
-      },
-      {
         test: /\.js$/,
         exclude: [ /node_modules/, /vendor/ ],
         use: 'babel-loader',
