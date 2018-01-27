@@ -18,16 +18,16 @@
   "dependencies": {
     "babel-polyfill": "^6.23.0",
     "bootstrap": "3.3.6",
-    "circos": "^2.1.0",
+    "circos": "2.1.0",
     "d3": "3.5.6",
     "express": "^4.16.2",
     "jquery": "2.2.0",
     "jquery-ui": "1.12.1",
-    "jquery.scrollto": "^2.1.2",
-    "locutus": "^2.0.9",
-    "save-svg-as-png": "^1.2.0",
-    "svg-intersections": "^0.3.2",
-    "viewport-size": "^0.0.1"
+    "jquery.scrollto": "2.1.2",
+    "locutus": "2.0.9",
+    "save-svg-as-png": "1.2.0",
+    "svg-intersections": "0.3.2",
+    "viewport-size": "0.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.0",
