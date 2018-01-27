@@ -22,3 +22,30 @@ export function scan(values, compare) {
 
   if (compare(xj, xj) === 0) return j;
 }
+
+// d3.comparator which is not a proper npm
+// from: https://github.com/interactivethings/d3-comparator
+function identity(d) { return d; }
+
+export function comparator() {
+  var cmps = [], accessors = [];
+
+  var comparator = function(a, b) {
+    var i = -1,
+      n = cmps.length,
+      result;
+    while (++i < n) {
+      result = cmps[i](accessors[i](a), accessors[i](b));
+      if (result !== 0) return result;
+    }
+    return 0;
+  };
+
+  comparator.order = function(cmp, accessor) {
+    cmps.push(cmp);
+    accessors.push(accessor || identity);
+    return comparator;
+  };
+
+  return comparator;
+}

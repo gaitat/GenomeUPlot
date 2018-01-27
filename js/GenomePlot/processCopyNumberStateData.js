@@ -2,9 +2,8 @@
  * @author gaitat / Athanasios Gaitatzes (Saki)
  */
 
-import '../../vendor/d3.js/d3-comparator';
-
 import GenomePlot from './GenomePlot';
+import { comparator } from '../local_lib/utils-d3';
 
 "use strict";
 
@@ -31,12 +30,12 @@ GenomePlot.processCopyNumberStateData = function(data)
 
 	// from: https://github.com/interactivethings/d3-comparator
 	// sort first by chrom_id and then by txStart (transcription start) so that the genes come in genomic order in the plot
-	var comparator = d3.comparator()
+	var compare = comparator()
 		.order( d3.ascending, function( d ) { return d.chrA; } )
 		.order( d3.ascending, function( d ) { return d.posA; } )
 		.order( d3.ascending, function( d ) { return d.posB; } )
 	;
-	localData.sort( comparator );
+	localData.sort( compare );
 
 	return localData;
 
