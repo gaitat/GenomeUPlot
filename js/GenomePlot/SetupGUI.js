@@ -3,7 +3,7 @@
  */
 
 import dat from '../../vendor/dat-gui/dat.gui-0.5.1-plus.min';
-import { svgAsDataUri } from '../../vendor/saveSvgAsPng';
+import { saveSvgAsPng } from 'save-svg-as-png';
 
 import GenomePlot from './GenomePlot';
 import { hideElementDisplay, showElementDisplay } from '../local_lib/domOperations';
@@ -338,28 +338,7 @@ GenomePlot.initGUI = function()
 					"_size_r" + GenomePlot.graphTypeCircos.outerRadius :
 					"_size_w" + GenomePlot.innerWidth + '_h' + GenomePlot.innerHeight ) + ".png";
 
-			// from: http://spin.atomicobject.com/2014/01/21/convert-svg-to-png/
-			svgAsDataUri (svg, 1.0, function(uri)
-			{
-				var image = new Image();
-				image.src = uri;
-				image.onload = function()
-				{
-					var canvas = document.createElement('canvas');
-					canvas.width = image.width;
-					canvas.height = image.height;
-					var context = canvas.getContext('2d');
-					context.drawImage(image, 0, 0);													// draw the svg canvas
-
-					var png = canvas.toDataURL('image/png');
-
-					var a = document.createElement('a');
-					a.download = name;
-					a.href = png;
-					document.body.appendChild(a);
-					a.click();
-				};
-			} );
+      saveSvgAsPng(svg,name);
 		}
 	};
 
