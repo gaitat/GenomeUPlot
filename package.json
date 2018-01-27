@@ -25,6 +25,7 @@
     "jquery": "2.2.0",
     "jquery-ui": "1.12.1",
     "jquery.scrollto": "^2.1.2",
+    "locutus": "^2.0.9",
     "save-svg-as-png": "^1.2.0",
 
     "svg-intersections": "^0.3.2"

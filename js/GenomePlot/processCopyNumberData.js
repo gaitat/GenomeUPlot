@@ -2,9 +2,10 @@
  * @author gaitat / Athanasios Gaitatzes (Saki)
  */
 
+import sprintf from 'locutus/php/strings/sprintf';
+
 import GenomePlot from './GenomePlot';
 import { assert } from '../local_lib/utils';
-import sprintf from '../../vendor/sprintf';
 
 "use strict";
 

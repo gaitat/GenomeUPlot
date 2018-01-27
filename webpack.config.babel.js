@@ -25,10 +25,6 @@ const webpackConfig = {
         use: 'exports-loader?dat'
       },
       {
-        test: require.resolve('./vendor/sprintf.js'),
-        use: 'exports-loader?sprintf'
-      },
-      {
         test: require.resolve('./vendor/circos.min.js'),
         use: 'exports-loader?Circos'
       },

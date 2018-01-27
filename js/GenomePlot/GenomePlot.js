@@ -3,9 +3,9 @@
  */
 
 import Circos from 'circos';
+import sprintf from 'locutus/php/strings/sprintf';
 
 import { getQueryVariable } from '../local_lib/utils';
-import sprintf from '../../vendor/sprintf';
 import {
     toggleElementVisibilitySlow,
     showElementDisplay,
