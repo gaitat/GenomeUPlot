@@ -7,12 +7,12 @@
 Number.prototype.map = function ( in_min, in_max, out_min, out_max )
 {
 	return ( this - in_min ) * ( out_max - out_min ) / ( in_max - in_min ) + out_min;
-}
+};
 
 Number.prototype.numeric = Number.prototype.numeric || function ()
 {
 	return ! isNaN( parseFloat( this ) ) && isFinite( this );
-}
+};
 /*
 Number.prototype.isInteger = Number.prototype.isInteger || function() {
 	return (this ^ 0) === +this;
@@ -20,7 +20,7 @@ Number.prototype.isInteger = Number.prototype.isInteger || function() {
 */
 Number.isInteger = Number.isInteger || function(x) {
 	return typeof x === "number" && isFinite(x) && Math.floor(x) === x;
-}
+};
 
 // round number to exp decimal places
 Number.prototype.round = function(exp) {
@@ -41,19 +41,19 @@ Number.prototype.round = function(exp) {
 	value = value.toString().split('e');
 
 	return +(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp));
-}
+};
 
 Math.trunc = Math.trunc || function(x) {
 	return x < 0 ? Math.ceil(x) : Math.floor(x);
-}
+};
 
 Math.roundToDigits = Math.roundToDigits || function(x, n) {
 	return Math.round (x * Math.pow (10, n)) / Math.pow (10, n);
-}
+};
 
 Math.log2 = Math.log2 || function(x) {
 	return Math.log(x) / Math.LN2;
-}
+};
 /*
 var log2 = Math.log(2);
 
@@ -87,7 +87,7 @@ String.prototype.startsWith = String.prototype.startsWith || function (aString) 
 	else {
 		return (this.substr(0, aString.length) == aString);
 	}
-}
+};
 
 String.prototype.endsWith = String.prototype.endsWith || function (aString) {
 	if (this.length < aString.length) {
@@ -96,7 +96,7 @@ String.prototype.endsWith = String.prototype.endsWith || function (aString) {
 	else {
 		return (this.substr(this.length - aString.length, aString.length) == aString);
 	}
-}
+};
 
 String.prototype.contains = String.prototype.contains || function (it) {
 	return this.indexOf(it) != -1;
@@ -108,12 +108,12 @@ String.prototype.includes = String.prototype.includes || function (it) {
 
 String.prototype.splitLines = String.prototype.splitLines || function () {
 	return this.split(/\r\n|\n|\r/gm);
-}
+};
 
 String.prototype.basename = String.prototype.basename || function(sep) {
 	sep = sep || '\\/';
 	return this.split(new RegExp("["+sep+"]")).pop();
-}
+};
 
 // from: http://stackoverflow.com/questions/3730510/javascript-sort-array-and-return-an-array-of-indicies-that-indicates-the-positi
 Array.prototype.sortIndices = function (func) {
@@ -133,7 +133,7 @@ Array.prototype.sortIndices = function (func) {
 	while (j--) {
 		this[j] = this[j].k;
 	}
-}
+};
 
 // from: https://stackoverflow.com/a/37319954/1980846
 Array.prototype.filterInPlace = function(condition)
@@ -148,7 +148,7 @@ Array.prototype.filterInPlace = function(condition)
 
 	this.length = j;
 	return this;
-}
+};
 
 // from: https://coderwall.com/p/nilaba/simple-pure-javascript-array-unique-method-with-5-lines-of-code
 Array.prototype.unique = function()
@@ -156,14 +156,14 @@ Array.prototype.unique = function()
 	return this.filter(function (value, index, self) { 
 		return self.indexOf(value) === index;
 	});
-}
+};
 
 Array.prototype.uniqueInPlace = function()
 {
 	return this.filterInPlace(function (value, index, self) { 
 		return self.indexOf(value) === index;
 	});
-}
+};
 
 ///////////////////////////////////////////////////////////////////////////////
 

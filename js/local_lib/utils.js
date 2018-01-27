@@ -42,7 +42,7 @@ console.save = function(data, filename) {
   a.dataset.downloadurl =  ['text/json', a.download, a.href].join(':');
   e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
   a.dispatchEvent(e);
-}
+};
 
 export function saveJSONtoCSV( json, fileName )
 {
