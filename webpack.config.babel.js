@@ -8,21 +8,21 @@ const minifiedExt = isProd ? '.min' : '';
 
 const webpackConfig = {
   entry: [
-    './js/index.js',
+    './src/index.js',
   ],
   output: {
-    filename: `js/bundle${minifiedExt}.js`,
+    filename: `js/GenomePlot${minifiedExt}.js`,
     path: path.resolve(__dirname, isProd ? 'dist' : 'build'),
   },
   module: {
     rules: [
       {
         test: require.resolve('./vendor/dat-gui/dat.gui-0.5.1-plus.min.js'),
-        use: 'exports-loader?dat'
+        use: 'exports-loader?dat',
       },
       {
         test: /\.js$/,
-        exclude: [ /node_modules/, /vendor/ ],
+        exclude: [/node_modules/, /vendor/],
         use: 'babel-loader',
       },
       {
@@ -30,11 +30,11 @@ const webpackConfig = {
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: 'css-loader',
-        })
+        }),
       },
       {
         test: /\.(jpe?g|gif|png)$/,
-        loader: 'file-loader?emitFile=false&name=[path][name].[ext]'
+        loader: 'file-loader?emitFile=false&name=[path][name].[ext]',
       },
       {
         test: /\.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
@@ -50,7 +50,7 @@ const webpackConfig = {
     hot: true,
     port: 8000,
     watchContentBase: true,
-    contentBase: './',
+    contentBase: './public',
   },
   plugins: [
     new webpack.ProvidePlugin({
@@ -64,12 +64,13 @@ const webpackConfig = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new HtmlWebpackPlugin({ filename: 'GenomePlot.html', template: './GenomePlot.html' }),
-    new ExtractTextPlugin({ filename: `css/style${minifiedExt}.css`, disable: !isProd }),
+    new HtmlWebpackPlugin({ filename: 'GenomePlot.html', template: 'public/GenomePlot.html' }),
+    new ExtractTextPlugin({ filename: `css/GenomePlot${minifiedExt}.css`, disable: !isProd }),
   ],
 };
 
-if (isProd) {
+if (isProd)
+{
   // from: https://stackoverflow.com/a/41041580/1980846
   webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
     compress: {

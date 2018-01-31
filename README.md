@@ -2,27 +2,43 @@
 
 The Genome U-Plot is a JavaScript tool to visualize Chromosomal abnormalities in the Human Genome using a U-shape layout. 
 
-![GenomeU-Plot](data/LNCAP.png)
+![GenomeU-Plot](public/data/LNCAP.png)
 Whole Genome U-Plot. Visible are the 24 human chromosomes arranged in a U-shape, the cytobands, the chromosome junctions and the copy number variations (CNVs). The axes at the bottom right of the graph are respectively for the chromosomes on the right side of the plot.
 
-**Note:** This is an example prototype visualization technique. 
 
-## Run a local server
+## Node
+> **[Node.js](https://nodejs.org/)** is an open-source, cross-platform JavaScript runtime environment for developing a diverse variety of server tools and applications.
 
-### Node.js server
+We use Node for basically everything in this project, so we are going to need it. Please visit the [download page](https://nodejs.org/en/download/current/) for **macOS** or **Windows** binaries, or the [package manager installations page](https://nodejs.org/en/download/package-manager/) for Linux distributions.
 
-Node.js has a simple HTTP server package. To install:
+In this project we used Node.js v6.10.0 LTS.
+
+## Node Version Management Tools
+If you need the flexibility to use multiple versions of Node, check out [NVM](https://github.com/creationix/nvm) or [Windows NVM](https://github.com/coreybutler/nvm-windows).
+
+## NPM
+NPM is the default package manager for Node. It is automatically installed alongside with Node. Package managers are used to install and manage packages (modules of code that you or someone else wrote). We are going to use a lot of packages but we'll use **Yarn**, another package manager.
+
+## Yarn
+> **[Yarn](https://yarnpkg.com/)** is a Node.js package manager which is much faster than NPM, has offline support, and fetches dependencies [more predictably](https://yarnpkg.com/en/docs/yarn-lock).
+
+### To install yarn
+Use **NPM** and run:
 ```
-npm install http-server -g
+> $ npm install --global yarn
 ```
 
-This will install http-server globally so that it may be run from the command line. 
-To run (from your local directory):
+### To install the project dependencies
+Start a command shell, change directory to the directory of the project and install the project dependencies using:
 ```
-http-server -p 8000
+> $ yarn install
 ```
 
 ### To run the project
+Use: 
+```
+> $ yarn start
+```
 Using a modern browser visit:
 ```
 http://localhost:8000/GenomePlot.html?sampleId=LNCAP
@@ -30,7 +46,7 @@ http://localhost:8000/GenomePlot.html?sampleId=LNCAP
 
 ## Data Visualization
 
-A sample (LNCAP) with all required files is provided in the `data` directory
+A sample (LNCAP) with all required files is provided in the `public/data` directory
 ```
 LNCAP/LNCAP_alts_comprehensive.csv  (Sample Rearrangements)
 LNCAP/LNCAP_cnvIntervals.csv        (Sample Copy Number Variation - Intervals)
@@ -42,9 +58,9 @@ In order to run the application against a different sample (eg. MY_SAMPLE) you n
 
 ### Reference file
 
--   A Human Genome Assembly GRCh38 cytobands reference file is provided by the visualization (`reference/cytobands/hg38/cytoBand.json`), however if you want to use your own you may download and uncompress a definition file from <ftp://hgdownload.cse.ucsc.edu/goldenPath/hg38/database/cytoBand.txt.gz>. 
+-   A Human Genome Assembly GRCh38 cytobands reference file is provided by the visualization (`public/reference/cytobands/hg38/cytoBand.json`), however if you want to use your own you may download and uncompress a definition file from <ftp://hgdownload.cse.ucsc.edu/goldenPath/hg38/database/cytoBand.txt.gz>. 
 Then you must convert the file to a json format of the following form:
-```javascript
+```
 [
     {
         chrom: "chr1",
@@ -66,9 +82,9 @@ Then you must convert the file to a json format of the following form:
 ### Sample Definition
 
 A sample specific json file must be provided (as in `LNCAP\LNCAP_visualization.json`):
-```javascript
+```
 {
-    fileFormatVersion: 1,
+    fileFormatVersion: 1,    
     altsComprehensive: "sampleId_alts_comprehensive.csv",
     cnvBinned30KJson: "sampleId_genomePlot_cnv30.json",
     cnvIntervals: "sampleId_cnvIntervals.csv"
@@ -95,11 +111,11 @@ where *cnvState* is one of 1 (loss), 2 (normal) or 3 (gain) and *nrd* is a float
 
 ## Variant Call Format (VCF) file Support
 
-In order to run the application against a sample that is stored in a **VCF** file, we provide an **R** script `vcftoUplot.R` (which resides in the `data` directory). The script was tested with R-3.3.3 and requires the R package `VariantAnnotation`, which will be automatically installed if not present. The script takes as input a **VCF** file (tested VCF v4.1 and v4.2) and produces the file structure hierarchy required by the Genome U-Plot in order to visualize the sample. Finally don't forget to replace your sample name in the URL parameter of the app.
+In order to run the application against a sample that is stored in a **VCF** file, we provide an **R** script `vcftoUplot.R` (which resides in the `public/data` directory). The script was tested with R-3.3.3 and requires the R package `VariantAnnotation`, which will be automatically installed if not present. The script takes as input a **VCF** file (tested VCF v4.1 and v4.2) and produces the file structure hierarchy required by the Genome U-Plot in order to visualize the sample. Finally don't forget to replace your sample name in the URL parameter of the app.
 
 ### To run `vcftoUplot.R`
 
-Given a **VCF** sample file NA12878.vcf (provided in the `data` directory), run
+Given a **VCF** sample file NA12878.vcf (provided in the `public/data` directory), run
 ```
 Rscript vcftoUplot.R NA12878.vcf
 ```

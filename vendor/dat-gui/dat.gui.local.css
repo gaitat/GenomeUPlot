@@ -18,37 +18,3 @@
     margin-top: 0.5vw;
     margin-right: 0.5vw;
 }
-
-.dg .property-name {
-    width: 50%;		/* was 60% */
-}
-.dg .c {
-    width: 50%;		/* was 40% */
-}
-.dg .c input[type=text] {
-    margin-top: 4px 0 0 0;
-    padding: 4px 3px 3px 3px;
-    height: 19px;
-}
-.dg .has-slider input[type=text] {
-    width: 27%;		/* was 30% */
-}
-.dg .slider {
-    width: 70%;		/* was 66% */
-    margin-left: 0px;	/* was -5 */
-}
-
-.dg .close-function {
-    /* remove the colored left stripe */
-    border-left: 0 !important;
-    background-color: #ccc !important;
-}
-
-.dg .close-function:hover {
-    background-color: #ddd !important;
-}
-
-.dg li.close-function .property-name {
-    width: 100%;
-    text-align: center;
-}

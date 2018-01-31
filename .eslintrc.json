@@ -7,12 +7,17 @@
   ],
   "env": {
     "browser": true,
-    "jest": true,
     "jquery": true
   },
+  "globals": {
+    "d3": false
+  },
   "rules": {
+    "brace-style": [2, "allman", { "allowSingleLine": true }],
     "compat/compat": 2,
     "func-names": "off",
+    "indent": ["error", 4],
+    "linebreak-style": 0,
     "no-console": "off",
     "no-underscore-dangle": "off",
     "no-restricted-syntax": ["error", "WithStatement", "ForInStatement", "LabeledStatement", "BinaryExpression[operator='in']"]

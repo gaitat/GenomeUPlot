@@ -7,23 +7,16 @@
     "> 1%"
   ],
   "scripts": {
-    "start": "yarn dist && babel-node src/server --dist",
-    "start-dev": "webpack-dev-server --profile --inline --colors",
-    "lint": "eslint src webpack.config.babel.js --ext .js",
-    "test": "yarn lint && jest --coverage",
-    "precommit": "yarn test",
-    "build": "rimraf build && webpack --progress --profile --colors",
-    "dist": "rimraf dist && cross-env NODE_ENV=production webpack --progress --profile"
+    "start": "webpack-dev-server --profile --inline --colors",
+    "lint": "eslint --ext .js --report-unused-disable-directives js",
+    "precommit": "yarn lint"
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
-    "bootstrap": "3.3.6",
     "circos": "2.1.0",
     "d3": "3.5.6",
     "express": "^4.16.2",
     "jquery": "2.2.0",
-    "jquery-ui": "1.12.1",
-    "jquery.scrollto": "2.1.2",
     "locutus": "2.0.9",
     "save-svg-as-png": "1.2.0",
     "svg-intersections": "0.3.2",
@@ -33,7 +26,6 @@
     "babel-cli": "^6.24.0",
     "babel-core": "^6.24.0",
     "babel-eslint": "^8.0.3",
-    "babel-jest": "^21.2.0",
     "babel-loader": "^7.0.0",
     "babel-preset-env": "^1.2.1",
     "common-tags": "^1.4.0",
