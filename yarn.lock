@@ -3611,9 +3611,9 @@ isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
 
-jquery@2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-2.2.0.tgz#d0e84ebbf199da51bf7ec39307f19b35754e9cba"
+jquery@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.0.0.tgz#95a2a9541291a9f819e016f85ba247116d03e4ab"
 
 js-base64@^2.1.9:
   version "2.4.3"
