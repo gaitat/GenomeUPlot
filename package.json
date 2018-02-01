@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "start": "webpack-dev-server --profile --inline --colors",
-    "lint": "eslint --ext .js --report-unused-disable-directives js",
+    "lint": "eslint --ext .js --report-unused-disable-directives src",
     "precommit": "yarn lint"
   },
   "dependencies": {
