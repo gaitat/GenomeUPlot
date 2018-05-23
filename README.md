@@ -135,3 +135,11 @@ http://localhost:8000/GenomePlot.html?sampleId=NA12878
 **Note:** For this particular example you should use the *"Filter on # of Frags"* GUI option in order to reduce the number of visualized Chromosomal abnormalities. You can also uncheck the *"Line width to # Frags"* to disassociate the line thickness from the number of fragments supporting the event. 
 
 **Note II:** The Human Genome Assembly GRCh38 is assumed
+
+## Commercial use
+
+If you want to use Genome U-Plot in commercial settings, please contact us.
+
+## How to cite <a name="cite"></a>
+
+Gaitatzes AG, Johnson SH, Smadbeck JB and Vasmatzis G.; **Genome U-Plot: a whole genome visualization.** Bioinformatics 2017 Dec 21. https://doi.org/10.1093/bioinformatics/btx829
